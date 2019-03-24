@@ -4,9 +4,8 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import "./MessageList.scss";
 
 import { IMessage } from "../socket";
-import { socket } from "./socket";
 
-const MessageList = () => {
+const MessageList = ({ socket }) => {
   const [messages, setMessages] = useState(Map());
 
   useEffect(() => {

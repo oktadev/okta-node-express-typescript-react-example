@@ -1,8 +1,6 @@
 import React, { SyntheticEvent, useState } from "react";
 
-import { socket } from "./socket";
-
-const NewMessage = () => {
+const NewMessage = ({ socket }) => {
   const [value, setValue] = useState("");
   const submitForm = (e: SyntheticEvent) => {
     e.preventDefault();
