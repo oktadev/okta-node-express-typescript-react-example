@@ -8,14 +8,22 @@ const MessageList = () => {
   const [messages, setMessages] = useState(Map());
 
   useEffect(() => {
-    const listener = (message: IMessage) => {
+    const messageListener = (message: IMessage) => {
       setMessages((prevMessages) => prevMessages.set(message.id, message));
     };
 
-    socket.on("message", listener);
+    const deleteMessageListener = (messageID: string) => {
+      setMessages((prevMessages) => prevMessages.delete(messageID));
+    };
+
+    socket.on("message", messageListener);
+    socket.on("deleteMessage", deleteMessageListener);
     socket.emit("getMessages");
 
-    return () => socket.off("message", listener);
+    return () => {
+      socket.off("message", messageListener);
+      socket.off("deleteMessage", deleteMessageListener);
+    };
   }, []);
 
   return (

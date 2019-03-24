@@ -48,7 +48,14 @@ export default (io: Server) => {
       messages.add(message);
 
       sendMessage(io)(message);
-      setTimeout(() => messages.delete(message), messageExpirationTimeMS);
+
+      setTimeout(
+        () => {
+          messages.delete(message);
+          io.emit("deleteMessage", message.id);
+        },
+        messageExpirationTimeMS,
+      );
     });
 
     socket.on("disconnect", () => {
