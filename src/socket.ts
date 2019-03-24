@@ -4,30 +4,26 @@ import uuid from "uuid/v4";
 const messageExpirationTimeMS = 10 * 1000;
 
 export interface IUser {
-  id?: string;
+  id: string;
   name: string;
 }
 
+const defaultUser: IUser = {
+  id: "anon",
+  name: "Anonymous",
+};
+
 export interface IMessage {
-  userId?: string;
+  user: IUser;
   id: string;
   time: Date;
   value: string;
 }
 
-const sendMessage = (socket: Socket | Server) => (message: IMessage) => {
-  socket.emit("message", {
-    id: message.id,
-    time: message.time,
-    user: {
-      id: message.userId,
-    },
-    value: message.value,
-  });
-};
+const sendMessage = (socket: Socket | Server) =>
+  (message: IMessage) => socket.emit("message", message);
 
 export default (io: Server) => {
-  const users: Map<string, IUser> = new Map();
   const sockets: Set<Socket> = new Set();
 
   const messages: Set<IMessage> = new Set();
@@ -44,7 +40,13 @@ export default (io: Server) => {
     });
 
     socket.on("message", (value: string) => {
-      const message: IMessage = { time: new Date(), value, id: uuid() };
+      const message: IMessage = {
+        id: uuid(),
+        time: new Date(),
+        user: defaultUser,
+        value,
+      };
+
       messages.add(message);
 
       sendMessage(io)(message);

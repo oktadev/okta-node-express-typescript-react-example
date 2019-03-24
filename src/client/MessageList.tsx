@@ -1,6 +1,8 @@
 import { Map } from "immutable";
 import React, { SyntheticEvent, useEffect, useState } from "react";
 
+import "./MessageList.scss";
+
 import { IMessage } from "../socket";
 import { socket } from "./socket";
 
@@ -27,13 +29,18 @@ const MessageList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="message-list">
       {messages
         .toSet()
         .sortBy((message: IMessage) => message.time)
         .map((message: IMessage) => (
-          <div key={message.id}>
-            {message.value}
+          <div
+            key={message.id}
+            className="message-list--message-container"
+            title={`Sent at ${new Date(message.time).toLocaleTimeString()}`}
+          >
+            <span className="message-list--message">{message.value}</span>
+            <span className="message-list--user">{message.user.name}</span>
           </div>
         )).toArray()
       }

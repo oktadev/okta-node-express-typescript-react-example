@@ -1,0 +1,24 @@
+.message-list {
+  max-width: 500px;
+  width: 100%;
+
+  .message-list--message-container {
+    display: flex;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+
+    .message-list--user {
+      font-size: 1.1em;
+      font-weight: bold;
+      justify-content: flex-end;
+    }
+
+    .message-list--message {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      padding-right: 10px;
+    }
+  }
+}
