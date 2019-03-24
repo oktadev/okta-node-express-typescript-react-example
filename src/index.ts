@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
 import express from "express";
 import http from "http";
 import Bundler from "parcel-bundler";
 import path from "path";
 import SocketIOServer from "socket.io";
+
+dotenv.config();
 
 import initializeSocketIO from "./socket";
 

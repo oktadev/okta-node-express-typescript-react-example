@@ -15,6 +15,7 @@
   "author": "",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@types/dotenv": "6.1.0",
     "@types/express": "4.16.1",
     "@types/node": "11.11.3",
     "@types/parcel-bundler": "1.10.2",
@@ -31,7 +32,10 @@
     "typescript": "3.3.3333"
   },
   "dependencies": {
+    "@okta/jwt-verifier": "0.0.14",
     "@okta/okta-react": "1.2.0",
+    "@okta/okta-sdk-nodejs": "1.2.0",
+    "dotenv": "7.0.0",
     "express": "4.16.4",
     "immutable": "4.0.0-rc.12",
     "react": "16.8.5",

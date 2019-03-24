@@ -10,7 +10,7 @@ import NewMessage from "./NewMessage";
 export default withAuth(({ auth }) => {
   const [authenticated, user, token] = useAuth(auth);
 
-  const getSocket = () => io(location.origin, { query: { token } });
+  const getSocket = () => io(location.origin, token && { query: { token } });
 
   const [socket, setSocket] = useState(getSocket);
 
