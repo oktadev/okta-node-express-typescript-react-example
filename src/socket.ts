@@ -37,14 +37,8 @@ const sendMessage = (socket: Socket | Server) =>
   (message: IMessage) => socket.emit("message", message);
 
 export default (io: Server) => {
-  const sockets: Set<Socket> = new Set();
-
-  const socketUsers: Map<Socket, IUser> = new Map();
+  const users: Map<Socket, IUser> = new Map();
   const messages: Set<IMessage> = new Set();
-
-  const sendMessageToAllSockets = (message: IMessage) => {
-    sockets.forEach((socket) => sendMessage(socket)(message));
-  };
 
   io.use(async (socket, next) => {
     const { token = null } = socket.handshake.query || {};
@@ -58,7 +52,7 @@ export default (io: Server) => {
         const { claims: { sub } } = await jwtVerifier.verifyAccessToken(tokenValue);
         const user = await oktaClient.getUser(sub);
 
-        socketUsers.set(socket, {
+        users.set(socket, {
           id: user.id,
           name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(" "),
         });
@@ -72,8 +66,6 @@ export default (io: Server) => {
   });
 
   io.on("connection", (socket) => {
-    sockets.add(socket);
-
     socket.on("getMessages", () => {
       messages.forEach(sendMessage(socket));
     });
@@ -82,7 +74,7 @@ export default (io: Server) => {
       const message: IMessage = {
         id: uuid(),
         time: new Date(),
-        user: socketUsers.get(socket) || defaultUser,
+        user: users.get(socket) || defaultUser,
         value,
       };
 
@@ -100,8 +92,7 @@ export default (io: Server) => {
     });
 
     socket.on("disconnect", () => {
-      socketUsers.delete(socket);
-      sockets.delete(socket);
+      users.delete(socket);
     });
   });
 };
