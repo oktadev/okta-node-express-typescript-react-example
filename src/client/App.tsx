@@ -9,16 +9,15 @@ import NewMessage from "./NewMessage";
 
 export default withAuth(({ auth }) => {
   const [authenticated, user, token] = useAuth(auth);
-
-  const getSocket = () => io(location.origin, token && { query: { token } });
-
-  const [socket, setSocket] = useState(getSocket);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    setSocket(getSocket());
+    const newSocket = io(location.origin, token && { query: { token } });
+    setSocket(newSocket);
+    return () => newSocket.close();
   }, [token]);
 
-  return (
+  return socket && (
     <div>
       {user ? (
         <div>

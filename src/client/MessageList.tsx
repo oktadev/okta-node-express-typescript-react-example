@@ -30,7 +30,7 @@ const MessageList = ({ socket }: IProps) => {
       socket.off("message", messageListener);
       socket.off("deleteMessage", deleteMessageListener);
     };
-  }, []);
+  }, [socket]);
 
   return (
     <div className="message-list">
