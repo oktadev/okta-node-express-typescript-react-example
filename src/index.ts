@@ -14,7 +14,7 @@ const server = new http.Server(app);
 const io = SocketIOServer(server);
 const port = 8080 || process.env.PORT;
 
-const bundler = new Bundler(path.join(__dirname, "client/index.html"));
+const bundler = new Bundler(path.join(__dirname, "../src/client/index.html"));
 
 initializeSocketIO(io);
 app.use(bundler.middleware());
