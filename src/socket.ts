@@ -29,7 +29,6 @@ const jwtVerifier = new OktaJwtVerifier({
 
 const oktaClient = new okta.Client({
   orgUrl: process.env.OKTA_ORG_URL,
-  requestExecutor: new okta.DefaultRequestExecutor(),
   token: process.env.OKTA_TOKEN,
 });
 

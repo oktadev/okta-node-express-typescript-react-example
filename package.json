@@ -23,7 +23,7 @@
     "@types/react-dom": "16.8.2",
     "@types/socket.io": "2.1.2",
     "@types/uuid": "3.4.4",
-    "parcel-bundler": "1.12.2",
+    "parcel-bundler": "1.12.3",
     "sass": "1.17.3",
     "ts-node-dev": "1.0.0-pre.32",
     "tslint": "5.13.1",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@okta/jwt-verifier": "0.0.14",
     "@okta/okta-react": "1.2.0",
-    "@okta/okta-sdk-nodejs": "1.2.0",
+    "@okta/okta-sdk-nodejs": "2.0.0",
     "dotenv": "7.0.0",
     "express": "4.16.4",
     "immutable": "4.0.0-rc.12",
