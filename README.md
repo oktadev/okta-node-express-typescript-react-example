@@ -9,9 +9,9 @@ This example app shows how to create a simple real-time chat server using Node a
 To install this example application, run the following commands:
 
 ```bash
-git clone git@github.com:oktadeveloper/okta-node-express-typescript-react-example.git
+git clone https://github.com/oktadeveloper/okta-node-express-typescript-react-example.git
 cd okta-node-express-typescript-react-example
-yarn
+npm install
 ```
 
 This will install a local copy of the project. You will need to set up some environment variables before the app will run properly.
