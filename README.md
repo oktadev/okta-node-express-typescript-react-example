@@ -2,6 +2,8 @@
 
 This example app shows how to create a simple real-time chat server using Node and TypeScript, as well as a frontend to interact with it using React. This uses Okta for authentication.
 
+Please read [Build a Node.js API with TypeScript](https://developer.okta.com/blog/2019/05/07/nodejs-typescript-api) to see how this example was built.
+
 **Prerequisites**: [Node.js](https://nodejs.org/en/).
 
 ## Getting Started
