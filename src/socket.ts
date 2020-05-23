@@ -1,7 +1,7 @@
 import OktaJwtVerifier from "@okta/jwt-verifier";
 import okta from "@okta/okta-sdk-nodejs";
 import { Server, Socket } from "socket.io";
-import uuid from "uuid/v4";
+import { v4 } from "uuid";
 
 const messageExpirationTimeMS = 10 * 1000;
 
@@ -71,7 +71,7 @@ export default (io: Server) => {
 
     socket.on("message", (value: string) => {
       const message: IMessage = {
-        id: uuid(),
+        id: v4(),
         time: new Date(),
         user: users.get(socket) || defaultUser,
         value,
