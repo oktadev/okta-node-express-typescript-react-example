@@ -1,6 +1,5 @@
 import { withAuth } from "@okta/okta-react";
-import { Map } from "immutable";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
 import { useAuth } from "./auth";
@@ -8,7 +7,7 @@ import MessageList from "./MessageList";
 import NewMessage from "./NewMessage";
 
 export default withAuth(({ auth }) => {
-  const [authenticated, user, token] = useAuth(auth);
+  const [user, token] = useAuth(auth);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {

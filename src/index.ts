@@ -1,13 +1,11 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
-import http from "http";
 import Bundler from "parcel-bundler";
 import path from "path";
+import http from "http";
 import SocketIOServer from "socket.io";
-
 import initializeSocketIO from "./socket";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const server = new http.Server(app);

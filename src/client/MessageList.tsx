@@ -1,16 +1,11 @@
 import { Map } from "immutable";
 import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Socket } from "socket.io";
-
-interface IProps {
-  socket: Socket;
-}
 
 import "./MessageList.scss";
 
 import { IMessage } from "../socket";
 
-const MessageList = ({ socket }: IProps) => {
+const MessageList = ({ socket }) => {
   const [messages, setMessages] = useState(Map());
 
   useEffect(() => {
