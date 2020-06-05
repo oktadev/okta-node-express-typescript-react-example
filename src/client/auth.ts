@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
+import { useOktaAuth } from "@okta/okta-react";
 
-export const useAuth = (auth) => {
+export const useAuth = () => {
+  const { authService, authState } = useOktaAuth();
   const [authenticated, setAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    auth.isAuthenticated().then((isAuthenticated) => {
-      if (isAuthenticated !== authenticated) {
-        setAuthenticated(isAuthenticated);
-      }
-    });
+    setAuthenticated(authState.isAuthenticated)
   });
 
   useEffect(() => {
     if (authenticated) {
-      auth.getUser().then(setUser);
-      auth.getAccessToken().then((accessToken) => {
-        setToken(accessToken ? `Bearer ${accessToken}` : null);
-      });
+      authService.getUser().then(setUser);
+      setToken(authState.accessToken ? `Bearer ${authState.accessToken}` : null);
     } else {
       setUser(null);
       setToken(null);

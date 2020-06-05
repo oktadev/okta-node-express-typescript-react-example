@@ -10,16 +10,6 @@ export interface IUser {
   name: string;
 }
 
-const jwtVerifier = new OktaJwtVerifier({
-  clientId: process.env.OKTA_CLIENT_ID,
-  issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
-});
-
-const oktaClient = new okta.Client({
-  orgUrl: process.env.OKTA_ORG_URL,
-  token: process.env.OKTA_TOKEN,
-});
-
 const defaultUser: IUser = {
   id: "anon",
   name: "Anonymous",
@@ -38,6 +28,16 @@ const sendMessage = (socket: Socket | Server) =>
 export default (io: Server) => {
   const messages: Set<IMessage> = new Set();
   const users: Map<Socket, IUser> = new Map();
+
+  const jwtVerifier = new OktaJwtVerifier({
+    clientId: process.env.OKTA_CLIENT_ID,
+    issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
+  });
+
+  const oktaClient = new okta.Client({
+    orgUrl: process.env.OKTA_ORG_URL,
+    token: process.env.OKTA_TOKEN,
+  });
 
   io.use(async (socket, next) => {
     const {token = null} = socket.handshake.query || {};

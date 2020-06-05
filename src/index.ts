@@ -5,6 +5,7 @@ import http from "http";
 import SocketIOServer from "socket.io";
 import initializeSocketIO from "./socket";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const app = express();
