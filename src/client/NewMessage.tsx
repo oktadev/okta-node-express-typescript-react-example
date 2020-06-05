@@ -1,17 +1,17 @@
-import React, { SyntheticEvent, useState } from "react";
-import { Socket } from "socket.io";
+import React, { SyntheticEvent, useState } from 'react';
+import { Socket } from 'socket.io';
 
 interface IProps {
   socket: Socket;
 }
 
-const NewMessage = ({ socket }: IProps) => {
-  const [value, setValue] = useState("");
+const NewMessage = ({socket}: IProps) => {
+  const [value, setValue] = useState('');
   const submitForm = (e: SyntheticEvent) => {
     e.preventDefault();
-    setValue("");
+    setValue('');
 
-    socket.emit("message", value);
+    socket.emit('message', value);
   };
 
   return (
