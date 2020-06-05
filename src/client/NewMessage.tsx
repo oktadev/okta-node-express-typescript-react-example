@@ -1,5 +1,5 @@
-import React, { SyntheticEvent, useState } from 'react';
-import { Socket } from 'socket.io';
+import React, { SyntheticEvent, useState } from "react";
+import { Socket } from "socket.io";
 
 interface IProps {
   socket: Socket;
@@ -11,7 +11,7 @@ const NewMessage = ({socket}: IProps) => {
     e.preventDefault();
     setValue('');
 
-    socket.emit('message', value);
+    socket.emit("message", value);
   };
 
   return (

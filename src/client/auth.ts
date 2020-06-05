@@ -27,4 +27,4 @@ export const useAuth = (auth) => {
 
   return [authenticated, user, token];
 };
-SS
+

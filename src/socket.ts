@@ -5,6 +5,11 @@ import okta from "@okta/okta-sdk-nodejs";
 
 const messageExpirationTimeMS = 10 * 1000;
 
+export interface IUser {
+  id: string;
+  name: string;
+}
+
 const jwtVerifier = new OktaJwtVerifier({
   clientId: process.env.OKTA_CLIENT_ID,
   issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
@@ -14,11 +19,6 @@ const oktaClient = new okta.Client({
   orgUrl: process.env.OKTA_ORG_URL,
   token: process.env.OKTA_TOKEN,
 });
-
-export interface IUser {
-  id: string;
-  name: string;
-}
 
 const defaultUser: IUser = {
   id: "anon",
