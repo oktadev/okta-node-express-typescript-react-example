@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useOktaAuth } from '@okta/okta-react';
-
 import { useAuth } from "./auth";
 import MessageList from "./MessageList";
 import NewMessage from "./NewMessage";

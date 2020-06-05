@@ -48,7 +48,7 @@ export default (io: Server) => {
           throw new Error("Expected a Bearer token");
         }
 
-        const {claims: {sub}} = await jwtVerifier.verifyAccessToken(tokenValue);
+        const {claims: {sub}} = await jwtVerifier.verifyAccessToken(tokenValue, 'api://default');
         const user = await oktaClient.getUser(sub);
 
         users.set(socket, {
