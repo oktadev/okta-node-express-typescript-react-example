@@ -1,7 +1,7 @@
-import { Server, Socket } from 'socket.io';
-import { v4 as uuidv4 } from 'uuid';
-import OktaJwtVerifier from '@okta/jwt-verifier';
-import okta from '@okta/okta-sdk-nodejs';
+import { Server, Socket } from "socket.io";
+import { v4 as uuidv4 } from "uuid";
+import OktaJwtVerifier from "@okta/jwt-verifier";
+import okta from "@okta/okta-sdk-nodejs";
 
 const messageExpirationTimeMS = 10 * 1000;
 
@@ -21,8 +21,8 @@ export interface IUser {
 }
 
 const defaultUser: IUser = {
-  id: 'anon',
-  name: 'Anonymous',
+  id: "anon",
+  name: "Anonymous",
 };
 
 export interface IMessage {
@@ -33,7 +33,7 @@ export interface IMessage {
 }
 
 const sendMessage = (socket: Socket | Server) =>
-  (message: IMessage) => socket.emit('message', message);
+  (message: IMessage) => socket.emit("message", message);
 
 export default (io: Server) => {
   const messages: Set<IMessage> = new Set();
@@ -43,9 +43,9 @@ export default (io: Server) => {
     const {token = null} = socket.handshake.query || {};
     if (token) {
       try {
-        const [authType, tokenValue] = token.trim().split(' ');
-        if (authType !== 'Bearer') {
-          throw new Error('Expected a Bearer token');
+        const [authType, tokenValue] = token.trim().split(" ");
+        if (authType !== "Bearer") {
+          throw new Error("Expected a Bearer token");
         }
 
         const {claims: {sub}} = await jwtVerifier.verifyAccessToken(tokenValue);
@@ -53,7 +53,7 @@ export default (io: Server) => {
 
         users.set(socket, {
           id: user.id,
-          name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(' '),
+          name: [user.profile.firstName, user.profile.lastName].filter(Boolean).join(" "),
         });
       } catch (error) {
         // tslint:disable-next-line:no-console
@@ -64,12 +64,12 @@ export default (io: Server) => {
     next();
   });
 
-  io.on('connection', (socket) => {
-    socket.on('getMessages', () => {
+  io.on("connection", (socket) => {
+    socket.on("getMessages", () => {
       messages.forEach(sendMessage(socket));
     });
 
-    socket.on('message', (value: string) => {
+    socket.on("message", (value: string) => {
       const message: IMessage = {
         id: uuidv4(),
         time: new Date(),
@@ -84,13 +84,13 @@ export default (io: Server) => {
       setTimeout(
         () => {
           messages.delete(message);
-          io.emit('deleteMessage', message.id);
+          io.emit("deleteMessage", message.id);
         },
         messageExpirationTimeMS,
       );
     });
 
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       users.delete(socket);
     });
   });
