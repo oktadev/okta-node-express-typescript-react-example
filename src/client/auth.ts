@@ -8,7 +8,9 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (authState.isAuthenticated) {
-      authService.getUser().then(setUser);
+      if (!user) {
+        authService.getUser().then(setUser);
+      }
       setToken(`Bearer ${authState.accessToken}`);
     } else {
       setUser(null);
