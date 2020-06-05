@@ -6,10 +6,10 @@ interface IProps {
 }
 
 const NewMessage = ({socket}: IProps) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const submitForm = (e: SyntheticEvent) => {
     e.preventDefault();
-    setValue('');
+    setValue("");
 
     socket.emit("message", value);
   };
