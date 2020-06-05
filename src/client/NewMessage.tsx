@@ -5,7 +5,7 @@ interface IProps {
   socket: Socket;
 }
 
-const NewMessage = ({ socket }: IProps) => {
+const NewMessage = ({socket}: IProps) => {
   const [value, setValue] = useState("");
   const submitForm = (e: SyntheticEvent) => {
     e.preventDefault();

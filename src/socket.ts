@@ -1,7 +1,7 @@
+import { Server, Socket } from "socket.io";
+import { v4 as uuidv4 } from "uuid";
 import OktaJwtVerifier from "@okta/jwt-verifier";
 import okta from "@okta/okta-sdk-nodejs";
-import { Server, Socket } from "socket.io";
-import uuid from "uuid/v4";
 
 const messageExpirationTimeMS = 10 * 1000;
 
@@ -22,25 +22,25 @@ export interface IMessage {
   value: string;
 }
 
-const jwtVerifier = new OktaJwtVerifier({
-  clientId: process.env.OKTA_CLIENT_ID,
-  issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
-});
-
-const oktaClient = new okta.Client({
-  orgUrl: process.env.OKTA_ORG_URL,
-  token: process.env.OKTA_TOKEN,
-});
-
 const sendMessage = (socket: Socket | Server) =>
   (message: IMessage) => socket.emit("message", message);
 
 export default (io: Server) => {
-  const users: Map<Socket, IUser> = new Map();
   const messages: Set<IMessage> = new Set();
+  const users: Map<Socket, IUser> = new Map();
+
+  const jwtVerifier = new OktaJwtVerifier({
+    clientId: process.env.OKTA_CLIENT_ID,
+    issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
+  });
+
+  const oktaClient = new okta.Client({
+    orgUrl: process.env.OKTA_ORG_URL,
+    token: process.env.OKTA_TOKEN,
+  });
 
   io.use(async (socket, next) => {
-    const { token = null } = socket.handshake.query || {};
+    const {token = null} = socket.handshake.query || {};
     if (token) {
       try {
         const [authType, tokenValue] = token.trim().split(" ");
@@ -48,7 +48,7 @@ export default (io: Server) => {
           throw new Error("Expected a Bearer token");
         }
 
-        const { claims: { sub } } = await jwtVerifier.verifyAccessToken(tokenValue);
+        const {claims: {sub}} = await jwtVerifier.verifyAccessToken(tokenValue, 'api://default');
         const user = await oktaClient.getUser(sub);
 
         users.set(socket, {
@@ -71,7 +71,7 @@ export default (io: Server) => {
 
     socket.on("message", (value: string) => {
       const message: IMessage = {
-        id: uuid(),
+        id: uuidv4(),
         time: new Date(),
         user: users.get(socket) || defaultUser,
         value,
